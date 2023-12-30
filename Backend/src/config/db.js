@@ -2,6 +2,7 @@ import { connect, disconnect } from "mongoose";
 async function connectToDatabase() {
   try {
     let DBString=process.env.MONGODB_URL+"/"+process.env.DB_NAME
+    console.log(DBString)
     await connect(DBString);
 
   } catch (error) {

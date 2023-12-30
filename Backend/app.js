@@ -8,5 +8,8 @@ const app = express();
 app.use(express.json());
 
 app.use("/api/v1", appRouter);
+// app.get('/', (req, res) => {
+//     res.send('Hello World!')
+//   })
 
 export default app;
