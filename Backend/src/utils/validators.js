@@ -20,3 +20,11 @@ export const userSignupValidator = [
     body('email').notEmpty().withMessage('Email is required').isEmail().withMessage('Invalid email address'),
     body('password').notEmpty().withMessage('Password is required').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
 ];
+
+export const loginValidator = [
+  body("email").trim().isEmail().withMessage("Email is required"),
+  body("password")
+    .trim()
+    .isLength({ min: 6 })
+    .withMessage("Password should contain atleast 6 characters"),
+];
