@@ -1,7 +1,7 @@
 import express from "express";
 import {
   getAllUsers,
-  userLogin,
+  UserLogin,
   UserSignup,
   verifyUser,
   userLogout
@@ -13,8 +13,8 @@ const userRoutes = express.Router();
 
 userRoutes.get("/getallUsers", getAllUsers);
 userRoutes.post("/signup",  validate(userSignupValidator), UserSignup);
-userRoutes.get("/login", validate(loginValidator), userLogin);
-userRoutes.get("/profile", verifyToken, verifyUser);
+userRoutes.post("/login", validate(loginValidator), UserLogin);
+userRoutes.get("/verify", verifyToken, verifyUser);
 userRoutes.get("/logout", verifyToken, userLogout);
 
 

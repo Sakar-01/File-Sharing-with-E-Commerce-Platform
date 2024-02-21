@@ -7,6 +7,7 @@ import cors from "cors";
 config();
 const app = express();
 
+
 //middlewares
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(express.json());
