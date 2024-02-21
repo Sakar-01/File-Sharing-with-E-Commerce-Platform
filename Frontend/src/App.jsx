@@ -6,12 +6,27 @@ import HomeScreen from "./pages/HomeScreen";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import PrivateRoute from "./utils/PrivateRoute";
+import Layout from "./components/Layout";
 import { Provider } from 'react-redux';
 import store from './redux/store'; 
 
 const theme = createTheme({
-  // Define your theme properties here
-  // For example: palette: { primary: { main: '#3498db' }, secondary: { main: '#2ecc71' } }
+  palette: {
+    primary: {
+      main: '#0f3963',
+    },
+    secondary: {
+      main: '#FF4081',
+    },
+  },
+  typography: {
+    fontFamily: 'Roboto, sans-serif',
+    fontSize: 16,
+    // h6:{
+    //   fontSize: 8,
+
+    // }
+  },
 });
 
 
@@ -21,10 +36,14 @@ function App() {
     <Provider store={store}>
     <ThemeProvider theme={theme}>
       <Router>
+            {/* <Layout /> */}
         <Routes>
           {/* @Private Routes */}
           <Route path="/" element={<PrivateRoute />}>
+            {/* <Route exact path="/" element={<HomeScreen />} /> */}
+          <Route path="/" element={<Layout />}>
             <Route exact path="/" element={<HomeScreen />} />
+          </Route>
           </Route>
           {/* @Public Routes */}
           <Route path="/register" element={<Signup />} />
