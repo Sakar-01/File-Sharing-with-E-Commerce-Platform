@@ -105,7 +105,7 @@ export const verifyUser = async (req, res) => {
       return res.status(401).json({ status: "ERROR", message: "Access UnAuthorized", isAuthenticated: false });
     }
 
-    return res.status(200).json({ status: "OK", isAuthenticated: true, user: { name: user.name, email: user.email } });
+    return res.status(200).json({ status: "OK", isAuthenticated: true, user: { id:user._id,name: user.name, email: user.email } });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ status: "ERROR", message: error.message, isAuthenticated: false });

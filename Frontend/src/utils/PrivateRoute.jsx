@@ -1,27 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux'; 
+import { checkAuthentication } from '../redux/auth/authActions'; 
 
 const PrivateRoute = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await axios.get('/api/v1/user/verify');
-        const { isAuthenticated } = response.data;
-
-        setIsAuthenticated(isAuthenticated);
-      } catch (error) {
-        console.error('Error checking authentication:', error);
-      } finally {
-        setLoading(false);
-      }
+      await dispatch(checkAuthentication());
+      setLoading(false); 
     };
 
     fetchData();
-  }, []);
+  }, [dispatch]);
 
   if (loading) {
     return <p>Loading...</p>;

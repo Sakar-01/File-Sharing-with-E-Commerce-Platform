@@ -57,7 +57,6 @@ const Login = ({ login, loading, error }) => {
         </Typography>
         <form onSubmit={handleSubmit}>
           <TextField
-            autoComplete
             value={formData.email}
             onChange={handleChange}
             label="Email"
