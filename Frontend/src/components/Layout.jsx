@@ -31,17 +31,17 @@ const Layout = (props) => {
       <Toolbar />
       <Divider />
       <List>
-        {["Dashboard", "Manage Files", "Store"].map((text, index) => (
+        {[{name:"Dashboard",url:'/'}, {name:"Manage Files",url:'/manage-files'}].map((text, index) => (
           <ListItem
             button
-            key={text}
+            key={text.name}
             component={Link}
-            to={`/inbox/${text.toLowerCase()}`}
+            to={text.url}
           >
             <ListItemIcon>
               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary={text.name} />
           </ListItem>
         ))}
       </List>
@@ -87,7 +87,7 @@ const Layout = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Responsive drawer
+            File Sharing
           </Typography>
         </Toolbar>
       </AppBar>

@@ -4,7 +4,7 @@ const fileSchema = new mongoose.Schema({
     name: { type: String, required: true },
     src: { type: String, required: true },
     uploadedBy: { type: String, required: true },
-    filePassword: { type: String },
+    isPrivate: { type: Boolean },
   });
 
 export default mongoose.model("File", fileSchema);

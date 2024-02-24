@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import HomeScreen from "./pages/HomeScreen";
+import ManageFiles from "./pages/ManageFiles";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import PrivateRoute from "./utils/PrivateRoute";
@@ -40,10 +41,10 @@ function App() {
         <Routes>
           {/* @Private Routes */}
           <Route path="/" element={<PrivateRoute />}>
-            {/* <Route exact path="/" element={<HomeScreen />} /> */}
-          <Route path="/" element={<Layout />}>
-            <Route exact path="/" element={<HomeScreen />} />
-          </Route>
+            <Route path="/" element={<Layout />}>
+              <Route exact path="/" element={<HomeScreen />} />
+              <Route exact path="/manage-files" element={<ManageFiles />} />
+            </Route>
           </Route>
           {/* @Public Routes */}
           <Route path="/register" element={<Signup />} />

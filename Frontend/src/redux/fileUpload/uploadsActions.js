@@ -1,5 +1,5 @@
 // uploadsActions.js
-import { UPLOAD_FILE_SUCCESS } from './uploadsActionTypes';
+import { UPLOAD_FILE_SUCCESS,FETCH_PUBLIC_FILES_SUCCESS } from './uploadsActionTypes';
 import axios from 'axios';
 
 export const uploadFileSuccess = (file) => ({
@@ -33,5 +33,25 @@ export const uploadFile = (file) => async (dispatch, getState) => {
   } catch (error) {
     console.error('Error uploading file:', error);
     alert('Error uploading file. Please try again.');
+  }
+};
+
+export const fetchPublicFiles = () => async (dispatch) => {
+  try {
+    const response = await axios.get('/api/v1/file/public-files');
+    
+    dispatch({ type: FETCH_PUBLIC_FILES_SUCCESS, payload: response.data });
+  } catch (error) {
+    // dispatch({ type: FETCH_PUBLIC_FILES_FAILURE, payload: error.message });
+  }
+};
+
+export const fetchPublicFileUrl = (fileId) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/api/v1/file/public-url/${fileId}`);
+   
+    return { success: true, resp: response.data };
+  } catch (error) {
+    return { success: false, resp: error.response.data };
   }
 };
