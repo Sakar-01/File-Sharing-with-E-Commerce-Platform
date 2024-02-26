@@ -1,3 +1,3 @@
-# File-Sharing-with-E-Commerce-Platform
-* Under Development <br/>
-Building a Secure File Sharing platform with seamless E-Commerce Integration, this project serves as a practical exploration by combining features of real-world large-scale systems.
+# Secure-File-Storage-and-Sharing
+
+Building a Secure File Sharing platform , this project serves as a practical exploration of file storage and sharing with Secured Authentication.
