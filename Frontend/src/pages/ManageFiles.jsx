@@ -77,6 +77,7 @@ const ManageFile = ({
           <Grid container spacing={2} columns={16} style={{marginTop:'30px'}}>
             {publicFiles.map((file) => (
               <Grid item xs={4} md={6}
+              key={file.name}
               className="card-item"
                onClick={() => {
                     handleToggleDialog(file);

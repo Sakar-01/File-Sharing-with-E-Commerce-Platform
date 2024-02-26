@@ -1,6 +1,6 @@
-import { LOGIN_SUCCESS, SET_AUTHENTICATION, LOGOUT,SIGNUP_REQUEST,
+import { LOGIN_SUCCESS, SET_AUTHENTICATION,SIGNUP_REQUEST,
   SIGNUP_SUCCESS,
-  SIGNUP_FAILURE, } from './types';
+  SIGNUP_FAILURE,LOGOUT_SUCCESS } from './types';
 
 const initialState = {
   isAuthenticated: false,
@@ -45,11 +45,10 @@ const authReducer = (state = initialState, action) => {
           loading: false,
           error: action.payload,
         };
-    case LOGOUT:
+    case LOGOUT_SUCCESS:
       return {
         ...state,
         isAuthenticated: false,
-        authToken: null,
         user: null,
         loading: false,
         error: null,

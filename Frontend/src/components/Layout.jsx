@@ -15,7 +15,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Link, Route, Routes } from "react-router-dom";
-
+import { connect } from 'react-redux';
+import { logout } from '../redux/auth/authActions';
 const drawerWidth = 220;
 
 const Layout = (props) => {
@@ -47,19 +48,17 @@ const Layout = (props) => {
       </List>
       <Divider />
       <List>
-        {["Profile","Logout"].map((text, index) => (
           <ListItem
             button
-            key={text}
+            key={'Logout'}
             component={Link}
-            to={`/inbox/${text.toLowerCase()}`}
+            onClick={()=>{props.logout()}}
           >
             <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              <MailIcon />
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <ListItemText primary={'Logout'} />
           </ListItem>
-        ))}
       </List>
     </div>
   );
@@ -146,5 +145,5 @@ const Layout = (props) => {
   );
 };
 
+export default connect(null, { logout })(Layout);
 
-export default Layout;

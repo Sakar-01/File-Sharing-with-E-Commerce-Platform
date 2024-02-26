@@ -7,6 +7,7 @@ import {
   SIGNUP_FAILURE,
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
+  LOGOUT_SUCCESS
  } from './types';
 
 const setAuthentication = (isAuthenticated, user) => ({
@@ -80,4 +81,12 @@ export const login = (userData,navigateTo) => async (dispatch) => {
   } catch (error) {
     // dispatch(signupFailure(error.response.data));
   }
+};
+
+export const logout = () => async(dispatch) => {
+  const response = await axios.get('/api/v1/user/logout');
+
+  dispatch({
+    type: LOGOUT_SUCCESS,
+  });
 };
