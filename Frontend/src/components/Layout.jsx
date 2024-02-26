@@ -87,7 +87,7 @@ const Layout = (props) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            File Sharing
+            File Storage & Sharing
           </Typography>
         </Toolbar>
       </AppBar>
@@ -138,18 +138,13 @@ const Layout = (props) => {
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Outlet />
+       <div style={{marginTop:'50px',marginLeft:'20px'}}>
+          <Outlet />
+        </div>
       </Box>
     </>
   );
 };
 
-const Inbox = () => {
-  return <Typography variant="h5">Inbox Content</Typography>;
-};
-
-const OtherFolder = () => {
-  return <Typography variant="h5">Other Folder Content</Typography>;
-};
 
 export default Layout;

@@ -1,42 +1,108 @@
-import {  fetchPublicFiles,fetchPublicFileUrl } from '../redux/fileUpload/uploadsActions';
-import { connect } from 'react-redux';
-import { useEffect } from 'react';
+import {
+  fetchPublicFiles,
+  fetchPublicFileUrl,changeFilePrivacy
+} from "../redux/fileUpload/uploadsActions";
+import { Grid } from '@mui/material';
+import './input-styles.css';
+import { connect } from "react-redux";
+import { useEffect,useState } from "react";
+import FileManageDialog from './FileManageDialog';
+const ManageFile = ({
+  publicFiles,
+  error,
+  fetchPublicFiles,
+  fetchPublicFileUrl,changeFilePrivacy
+}) => {
 
-const ManageFile = ({  publicFiles, error, fetchPublicFiles,fetchPublicFileUrl }) => {
-  
+  const [openDialog, setOpenDialog] = useState(false);
+  const [openfile, setOpenfile] = useState([]);
+  const [filePrivacy, setPrivacy] = useState(false);
+  const [fileUrl, setFileUrl] = useState(null);
+
+  const handleToggleDialog = async(file) => {
+    try {
+    if(!openDialog){
+      setPrivacy(file.isPrivate)
+      setOpenfile(file)
+      await fetchPublicFileUrl(file._id).then((result) => {
+        if (result.success) {
+          setFileUrl(result.resp.publicUrl)
+        } else {
+          console.error("Error fetching file URL:", result.resp);
+        }
+      });
+    }else{
+      setOpenfile([])
+      setFileUrl(null)
+    }
+    setOpenDialog(!openDialog);
+
+    } catch (error) {
+      
+    }
+    
+  };
+
   useEffect(() => {
     fetchPublicFiles();
-  }, [fetchPublicFiles]); 
-  
-const downloadFile=async(id)=>{
-  await fetchPublicFileUrl(id).then((result) => {
-    if(result.success){
-      const a = document.createElement('a');
-      a.href = result.resp.publicUrl;
-      a.download = result.resp.name; 
-      a.target = '_blank'; 
-      a.click();
-    }else{
-      console.error('Error fetching file URL:', result.resp);
-    }
-  })
+  }, [changeFilePrivacy]);
 
-
-}
+  const downloadFile = async (id) => {
+    await fetchPublicFileUrl(id).then((result) => {
+      if (result.success) {
+        const a = document.createElement("a");
+        a.href = result.resp.publicUrl;
+        a.download = result.resp.name;
+        a.target = "_blank";
+        a.click();
+      } else {
+        console.error("Error fetching file URL:", result.resp);
+      }
+    });
+  };
+  const setFilePrivacy = async (file,privacy) => {
+    let res = await changeFilePrivacy(file._id,privacy)
+    setPrivacy(res)
+    fetchPublicFiles();
+  };
 
   return (
     <div>
       {error && <div>Error: {error}</div>}
-      <div>
-        <h2>Public Files:</h2>
-        <ul>
-          {publicFiles.map((file) => (
-            <li key={file._id} onClick={()=>{downloadFile(file._id)}}>{file.name}</li>
-          ))}
-          {/* <img src='http://localhost:5000/api/v1/file/download/65d7159a3292cbe09f9a37f0'/> */}
-          {/* {publicFileUrl?<p>{publicFileUrl}</p>:''} */}
-        </ul>
-      </div>
+      {publicFiles.length > 0 ? (
+        <>
+          <h2>Files:</h2>
+          <div
+          >
+          <Grid container spacing={2} columns={16} style={{marginTop:'30px'}}>
+            {publicFiles.map((file) => (
+              <Grid item xs={4} md={6}
+              className="card-item"
+               onClick={() => {
+                    handleToggleDialog(file);
+                  }}>
+                {file.name}
+              </Grid>
+
+              ))}
+          </Grid>
+          </div>
+            <FileManageDialog
+              open={openDialog}
+              onClose={handleToggleDialog}
+              file={openfile}
+              filePrivacy={filePrivacy}
+              setFilePrivacy={setFilePrivacy}
+              fileUrl={fileUrl}
+              downloadFile={downloadFile}
+            />
+        </>
+      ) : (
+        <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+
+        <h2>Files not Uploaded!</h2>
+        </div>
+      )}
     </div>
   );
 };
@@ -47,7 +113,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  fetchPublicFiles,fetchPublicFileUrl
+  fetchPublicFiles,
+  fetchPublicFileUrl,changeFilePrivacy
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ManageFile);

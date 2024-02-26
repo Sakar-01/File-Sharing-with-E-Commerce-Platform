@@ -1,7 +1,7 @@
 import express from "express";
 const fileRoutes = express.Router();
 import {
-  fileUpload,fetchFiles,fetchPublicUrl,downloadPublicFile
+  fileUpload,fetchFiles,fetchPublicUrl,downloadPublicFile,changePrivacy
 } from "../controllers/filesControllers.js";
 import { verifyToken } from "../utils/token-manager.js";
 import multer from 'multer';
@@ -23,6 +23,8 @@ fileRoutes.get("/public-files",verifyToken, fetchFiles);
 fileRoutes.get("/public-url/:fileId",verifyToken, fetchPublicUrl);
 //Get Public File
 fileRoutes.get("/download/:fileId",verifyToken, downloadPublicFile);
+
+fileRoutes.put("/change-privacy/:fileId",verifyToken, changePrivacy);
 
 
 export default fileRoutes;

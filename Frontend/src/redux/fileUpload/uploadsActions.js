@@ -1,4 +1,3 @@
-// uploadsActions.js
 import { UPLOAD_FILE_SUCCESS,FETCH_PUBLIC_FILES_SUCCESS } from './uploadsActionTypes';
 import axios from 'axios';
 
@@ -53,5 +52,15 @@ export const fetchPublicFileUrl = (fileId) => async (dispatch) => {
     return { success: true, resp: response.data };
   } catch (error) {
     return { success: false, resp: error.response.data };
+  }
+};
+export const changeFilePrivacy = (fileId,privacy) => async () => {
+  try {
+    const response = await axios.put(`/api/v1/file/change-privacy/${fileId}`, {
+      privacy,
+    });
+  return response.data.isPrivate
+  } catch (error) {
+    console.error('Error updating privacy:', error.response ? error.response.data : error.message);
   }
 };

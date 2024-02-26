@@ -78,5 +78,19 @@ export const downloadPublicFile = async (req, res) => {
     console.error(error);
     res.status(500).send('Internal Server Error');
   }
-
   };
+
+  export const changePrivacy = async (req, res) => {
+    try {
+      const { fileId } = req.params;
+      const { privacy } = req.body;
+
+      // const userID = res.locals.jwtData.id
+      const updatedFile = await Files.findByIdAndUpdate(fileId, { 'isPrivate':privacy }, { new: true });
+
+      res.json(updatedFile);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+    };
