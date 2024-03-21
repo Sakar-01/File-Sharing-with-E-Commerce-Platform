@@ -37,6 +37,8 @@ Building a Secure File Sharing platform , this project serves as a practical exp
 
 ## Installation
 
+Node version: 18.18.2 and NPM version: 9.8.1
+
 1. Clone the repository:
 
    ```bash
